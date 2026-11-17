@@ -10,8 +10,8 @@ rfm AS (
          COUNT(*) frequency, SUM(amt) monetary
   FROM base GROUP BY cid),
 scored AS (
-  SELECT *, NTILE(5) OVER (ORDER BY recency_days DESC) r,
-            NTILE(5) OVER (ORDER BY monetary) m
+  SELECT *, NTILE(5) OVER (ORDER BY recency_days DESC, cid) r,
+            NTILE(5) OVER (ORDER BY monetary, cid) m
   FROM rfm),
 seg AS (
   SELECT *, CASE
